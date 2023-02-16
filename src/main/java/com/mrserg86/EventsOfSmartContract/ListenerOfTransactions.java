@@ -41,7 +41,7 @@ public class ListenerOfTransactions {
         BigInteger latestRealBlockNumber = result.getBlockNumber();
         System.out.println(" The latest Block Number is: " + latestRealBlockNumber);
 
-        for (int i = (latestKnownBlockNumber.intValue()); i <= latestRealBlockNumber.intValue(); i++) {
+        for (int i = (latestKnownBlockNumber.intValue() + 1); i <= latestRealBlockNumber.intValue(); i++) {
             List<EthBlock.TransactionResult> txr = web3.ethGetBlockByNumber(new DefaultBlockParameterNumber(i), true).send().getBlock().getTransactions();
             txr.forEach(tx -> {
                 EthBlock.TransactionObject transaction = (EthBlock.TransactionObject) tx.get();
