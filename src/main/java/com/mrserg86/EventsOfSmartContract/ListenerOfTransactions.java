@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import static com.mrserg86.EventsOfSmartContract.JavaKafkaConsumerExample.walletAddresses;
+
 @Slf4j
 @EnableScheduling
 @Service
@@ -27,14 +29,18 @@ public class ListenerOfTransactions {
     //Соеднияемся с блокчейном
     static Web3j web3 = Web3j.build(new HttpService("https://data-seed-prebsc-1-s1.binance.org:8545/"));
 
-    //переменная, в которую записываем номер блока, который проверили последним. В начале инициализируем значением последнего блока с bcsscan
+    //переменная, в которую записываем номер блока, который проверили последним. В начале инициализируем значением последнего блока с bscscan
     static BigInteger latestKnownBlockNumber = new BigInteger(String.valueOf(27252882)); //27120252
 
     //Список, в который сохраняем транзакции, в которых есть прослушиваемый кошелёк
-    static List<EthBlock.TransactionObject> txBingo = new ArrayList<>();
+    public static List<EthBlock.TransactionObject> txBingo = new ArrayList<>();
 
     @Scheduled(fixedDelay = 3000)
     public static void listenAddress() throws IOException, ExecutionException, InterruptedException {
+
+        //получаем список адресов для прослушивания из KafkaConsumer
+        List<BigInteger> addressesForListening = walletAddresses;
+        addressesForListening.forEach(System.out::println);
 
         //Убеждаемся, что соединение работает (скачиваем последний блок блокчейна)
         EthBlockNumber result = web3.ethBlockNumber().sendAsync().get();  //здесь запрашивается НОМЕР последнего блока (метод ethBlockNumber() по дефолту запрашивает последний блок)

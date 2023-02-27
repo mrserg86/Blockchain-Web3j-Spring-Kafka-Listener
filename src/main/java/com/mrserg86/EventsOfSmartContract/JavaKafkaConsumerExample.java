@@ -8,14 +8,23 @@ import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.TopicPartition;
 import org.apache.kafka.common.serialization.LongDeserializer;
 import org.apache.kafka.common.serialization.StringDeserializer;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
+@EnableScheduling
+@Service
 public class JavaKafkaConsumerExample {
 
-    public static void main(String[] args) {
+    public static List<BigInteger> walletAddresses;
+
+    @Scheduled(fixedDelay = 3000)
+    public static void consume() {
         String server = "localhost:9092";
         String topicName = "test.topic";
         String groupName = "test.group";
@@ -43,6 +52,7 @@ public class JavaKafkaConsumerExample {
         if (!consumerRecords.isEmpty()) {
             System.out.println("SUCCESS");
             System.out.println(consumerRecords.iterator().next().value());
+            walletAddresses.add(new BigInteger(String.valueOf(consumerRecords.iterator().next().value())));
         }
 
         consumer.close();

@@ -7,6 +7,8 @@ import org.apache.kafka.common.serialization.StringSerializer;
 import java.util.Properties;
 import java.util.concurrent.ExecutionException;
 
+import static com.mrserg86.EventsOfSmartContract.ListenerOfTransactions.txBingo;
+
 public class JavaKafkaProducerExample {
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
@@ -25,7 +27,7 @@ public class JavaKafkaProducerExample {
         final Producer<Long, String> producer =
                 new KafkaProducer<>(props);
 
-        RecordMetadata recordMetadata = (RecordMetadata) producer.send(new ProducerRecord(topicName, "example message")).get();
+        RecordMetadata recordMetadata = (RecordMetadata) producer.send(new ProducerRecord(topicName, txBingo.iterator().next().getValue())).get();
         if (recordMetadata.hasOffset())
             System.out.println("Message sent successfully");
 
