@@ -13,21 +13,20 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
-@EnableScheduling
-@Service
 public class JavaKafkaConsumerExample {
 
-    public static List<BigInteger> walletAddresses;
+    //public static List<BigInteger> walletAddresses;
 
-    @Scheduled(fixedDelay = 3000)
-    public static void consume() {
+    public static List<String> consume() {
         String server = "localhost:9092";
         String topicName = "test.topic";
         String groupName = "test.group";
+        List<String> walletAddresses = new ArrayList<>();
 
         final Properties props = new Properties();
 
@@ -52,10 +51,12 @@ public class JavaKafkaConsumerExample {
         if (!consumerRecords.isEmpty()) {
             System.out.println("SUCCESS");
             System.out.println(consumerRecords.iterator().next().value());
-            walletAddresses.add(new BigInteger(String.valueOf(consumerRecords.iterator().next().value())));
+            walletAddresses.add(String.valueOf(consumerRecords.iterator().next().value()));
         }
 
         consumer.close();
+
+        return walletAddresses;
     }
 
 }
