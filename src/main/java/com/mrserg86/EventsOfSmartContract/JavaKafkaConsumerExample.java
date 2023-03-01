@@ -24,7 +24,7 @@ public class JavaKafkaConsumerExample {
 
     public static List<String> consume() {
         String server = "localhost:9092";
-        String topicName = "test.topic";
+        String topicName = "test.topic1";
         String groupName = "test.group";
         List<String> walletAddresses = new ArrayList<>();
 

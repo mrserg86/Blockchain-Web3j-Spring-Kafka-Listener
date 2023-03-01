@@ -13,7 +13,7 @@ public class JavaKafkaProducerExample {
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
         String server = "localhost:9092";
-        String topicName = "test.topic";
+        String topicName = "test.topic1";
 
         final Properties props = new Properties();
 
@@ -30,6 +30,8 @@ public class JavaKafkaProducerExample {
 //        RecordMetadata recordMetadata = (RecordMetadata) producer.send(new ProducerRecord(topicName, txBingo.iterator().next().getValue())).get();
 //        if (recordMetadata.hasOffset())
 //            System.out.println("Message sent successfully");
+
+
 
         RecordMetadata recordMetadata = (RecordMetadata) producer.send(new ProducerRecord(topicName, "0xeDc5c0029309cA5576D452456228ca0B1fE8b9a3")).get();
         if (recordMetadata.hasOffset())

@@ -49,7 +49,12 @@ public class ListenerOfTransactions {
 
         addressesForListening.forEach(aFL -> {
             for (int i = (latestKnownBlockNumber.intValue() + 1); i <= latestRealBlockNumber.intValue(); i++) {
-                List<EthBlock.TransactionResult> txr = web3.ethGetBlockByNumber(new DefaultBlockParameterNumber(i), true).send().getBlock().getTransactions();
+                List<EthBlock.TransactionResult> txr = null;
+                try {
+                    txr = web3.ethGetBlockByNumber(new DefaultBlockParameterNumber(i), true).send().getBlock().getTransactions();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
                 txr.forEach(tx -> {
                     EthBlock.TransactionObject transaction = (EthBlock.TransactionObject) tx.get();
                     if(transaction.getTo() == null || transaction.getTo().trim().isEmpty()) {
@@ -57,7 +62,7 @@ public class ListenerOfTransactions {
                     } else
                     if(transaction.getTo().equalsIgnoreCase(aFL)) {
                         txBingo.add(transaction);
-                        System.out.println("From address " + transaction.getFrom() + "  was transaction to " + walletAddress + " address");
+                        System.out.println("From address " + transaction.getFrom() + "  was transaction to " + aFL + " address");
                     } else {
                         System.out.println("No any transactions with our address in block ");
                     }
