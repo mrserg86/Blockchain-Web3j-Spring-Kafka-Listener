@@ -43,6 +43,7 @@ public class ListenerOfTransactions {
         //получаем список адресов для прослушивания из KafkaConsumer
         List<String> addressesForListening = consume();
         addressesForListening.forEach(System.out::println);
+
         EthBlockNumber result = web3.ethBlockNumber().sendAsync().get();  //здесь запрашивается НОМЕР последнего блока (метод ethBlockNumber() по дефолту запрашивает последний блок)
         BigInteger latestRealBlockNumber = result.getBlockNumber();
         System.out.println(" The latest Block Number is: " + latestRealBlockNumber);

@@ -95,14 +95,14 @@ https://mvnrepository.com/artifact/org.web3j/core/5.0.0
 4. option: create topic
 5. create and check topic
 
-   sudo /usr/local/kafka-server/bin/kafka-topics.sh --bootstrap-server localhost:9092 --create --topic theFirstTopic
-   sudo /usr/local/kafka-server/bin/kafka-topics.sh  --describe --topic theFirstTopic --bootstrap-server localhost:9092
+   sudo /usr/local/kafka/bin/kafka-topics.sh --bootstrap-server localhost:9092 --create --topic theFirstTopic
+   sudo /usr/local/kafka/bin/kafka-topics.sh  --describe --topic theFirstTopic --bootstrap-server localhost:9092
 
 as Example
 
       sudo /opt/kafka/bin/kafka-topics.sh --bootstrap-server localhost:9092 --describe  --topic bddmEvent
 
 6. option: test producing
-   sudo /usr/local/kafka-server/bin/kafka-console-producer.sh --topic theFirstTopic --bootstrap-server localhost:9092
+   sudo /usr/local/kafka/bin/kafka-console-producer.sh --topic theFirstTopic --bootstrap-server localhost:9092
 7. option test consumer
-   sudo /usr/local/kafka-server/bin/kafka-console-consumer.sh --topic theFirstTopic --from-begining --bootstrap-server localhost:9092
+   sudo /usr/local/kafka/bin/kafka-console-consumer.sh --topic theFirstTopic --from-begining --bootstrap-server localhost:9092
