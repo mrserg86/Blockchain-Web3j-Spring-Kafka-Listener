@@ -13,7 +13,7 @@ public class JavaKafkaProducerExample {
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
         String server = "localhost:9092";
-        String topicName = "test.topic1";
+        String topicName = "topicIn";
 
         final Properties props = new Properties();
 
