@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import static com.mrserg86.EventsOfSmartContract.JavaKafkaConsumerExample.consume;
+import static com.mrserg86.EventsOfSmartContract.JavaKafkaProducerExample.produce;
 
 //import static com.mrserg86.EventsOfSmartContract.JavaKafkaConsumerExample.walletAddresses;
 
@@ -35,7 +36,8 @@ public class ListenerOfTransactions {
     static BigInteger latestKnownBlockNumber = new BigInteger(String.valueOf(27252882)); //27120252
 
     //Список, в который сохраняем транзакции, в которых есть прослушиваемый кошелёк
-    public static List<EthBlock.TransactionObject> txBingo = new ArrayList<>();
+    public static List<EthBlock.TransactionObject> txBingo = new ArrayList<>(); //список, куда сохраняются транзакции, которые нас интересуют
+ //   public static List<String> ;
 
     @Scheduled(fixedDelay = 3000)
     public static void listenAddress() throws IOException, ExecutionException, InterruptedException {
@@ -63,7 +65,15 @@ public class ListenerOfTransactions {
                     } else
                     if(transaction.getTo().equalsIgnoreCase(aFL)) {
                         txBingo.add(transaction);
-                        System.out.println("From address " + transaction.getFrom() + "  was transaction to " + aFL + " address");
+                        System.out.println("From address " + transaction.getFrom() + "  was transaction to " + aFL + " address " + " How much: " + transaction.getValue());
+                        //отправляем список, полученных транзакций в KafkaProducer
+                        try {
+                            produce(transaction.getFrom(), aFL, String.valueOf(transaction.getValue()));
+                        } catch (ExecutionException e) {
+                            throw new RuntimeException(e);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
                     } else {
                         System.out.println("No any transactions with our address in block ");
                     }
@@ -71,10 +81,15 @@ public class ListenerOfTransactions {
                 });
                 latestKnownBlockNumber = latestRealBlockNumber;
                 System.out.println("Finish check block number  " + i);
-                //break;
 
             }
+
         });
+
+    }
+
+}
+
 
 //        //Убеждаемся, что соединение работает (скачиваем последний блок блокчейна)
 //        EthBlockNumber result = web3.ethBlockNumber().sendAsync().get();  //здесь запрашивается НОМЕР последнего блока (метод ethBlockNumber() по дефолту запрашивает последний блок)
@@ -101,9 +116,3 @@ public class ListenerOfTransactions {
 //            //break;
 //
 //        }
-
-
-
-        }
-
-}
