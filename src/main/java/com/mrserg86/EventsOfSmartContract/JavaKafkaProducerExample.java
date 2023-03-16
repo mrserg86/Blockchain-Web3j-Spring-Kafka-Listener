@@ -3,19 +3,15 @@ package com.mrserg86.EventsOfSmartContract;
 import org.apache.kafka.clients.producer.*;
 import org.apache.kafka.common.serialization.LongSerializer;
 import org.apache.kafka.common.serialization.StringSerializer;
-import org.apache.kafka.common.serialization.IntegerSerializer;
 
-import java.math.BigInteger;
 import java.util.Properties;
 import java.util.concurrent.ExecutionException;
-
-import static com.mrserg86.EventsOfSmartContract.ListenerOfTransactions.txBingo;
 
 public class JavaKafkaProducerExample {
 
     public static void produce(String addressFrom, String addressTo, String howMuch) throws ExecutionException, InterruptedException {
         String server = "localhost:9092";
-        String topicName = "topicOut9";
+        String topicName = "topicOut";
 
         final Properties props = new Properties();
 
@@ -29,13 +25,8 @@ public class JavaKafkaProducerExample {
         final Producer<Long, String> producer =
                 new KafkaProducer<>(props);
 
-//        RecordMetadata recordMetadata = (RecordMetadata) producer.send(new ProducerRecord(topicName, txBingo.iterator().next().getValue())).get();
-//        if (recordMetadata.hasOffset())
-//            System.out.println("Message sent successfully");
-
-
-
-        RecordMetadata recordMetadata = (RecordMetadata) producer.send(new ProducerRecord(topicName, "From address " + addressFrom + " was transaction to " + addressTo + "; Quantity: " + howMuch)).get();
+        RecordMetadata recordMetadata = (RecordMetadata) producer.send
+                (new ProducerRecord(topicName, "From address " + addressFrom + " was transaction to " + addressTo + "; Quantity: " + howMuch)).get();
         if (recordMetadata.hasOffset())
             System.out.println("Message sent successfully");
 

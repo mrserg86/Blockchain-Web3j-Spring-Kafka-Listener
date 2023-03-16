@@ -98,10 +98,6 @@ https://mvnrepository.com/artifact/org.web3j/core/5.0.0
    sudo /usr/local/kafka/bin/kafka-topics.sh --bootstrap-server localhost:9092 --create --topic firstTopic
    sudo /usr/local/kafka/bin/kafka-topics.sh  --describe --topic firstTopic --bootstrap-server localhost:9092
 
-as Example
-
-      sudo /opt/kafka/bin/kafka-topics.sh --bootstrap-server localhost:9092 --describe  --topic bddmEvent
-
 6. option: test producing
    sudo /usr/local/kafka/bin/kafka-console-producer.sh --topic firstTopic --bootstrap-server localhost:9092
 7. option test consumer

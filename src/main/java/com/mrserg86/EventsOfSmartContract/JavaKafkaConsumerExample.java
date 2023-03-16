@@ -8,11 +8,7 @@ import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.TopicPartition;
 import org.apache.kafka.common.serialization.LongDeserializer;
 import org.apache.kafka.common.serialization.StringDeserializer;
-import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Service;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -20,11 +16,9 @@ import java.util.Properties;
 
 public class JavaKafkaConsumerExample {
 
-    //public static List<BigInteger> walletAddresses;
-
     public static List<String> consume() {
         String server = "localhost:9092";
-        String topicName = "topicIn3";
+        String topicName = "topicIn";
         String groupName = "test.group";
         List<String> walletAddresses = new ArrayList<>();
 
@@ -48,11 +42,11 @@ public class JavaKafkaConsumerExample {
         consumer.seekToBeginning(tps);
 
         ConsumerRecords<Long, String> consumerRecords = consumer.poll(30000);
-        if (!consumerRecords.isEmpty()) {
-            System.out.println("SUCCESS");
-            System.out.println(consumerRecords.iterator().next().value());
-            walletAddresses.add(String.valueOf(consumerRecords.iterator().next().value()));
-        }
+            if (!consumerRecords.isEmpty()) {
+                System.out.println("Адрес в консумер получен");
+                System.out.println("Список адресов для прослушивания: " + consumerRecords.iterator().next().value());
+                walletAddresses.add(String.valueOf(consumerRecords.iterator().next().value()));
+            }
 
         consumer.close();
 

@@ -19,8 +19,6 @@ import java.util.concurrent.ExecutionException;
 import static com.mrserg86.EventsOfSmartContract.JavaKafkaConsumerExample.consume;
 import static com.mrserg86.EventsOfSmartContract.JavaKafkaProducerExample.produce;
 
-//import static com.mrserg86.EventsOfSmartContract.JavaKafkaConsumerExample.walletAddresses;
-
 @Slf4j
 @EnableScheduling
 @Service
@@ -33,7 +31,7 @@ public class ListenerOfTransactions {
     static Web3j web3 = Web3j.build(new HttpService("https://data-seed-prebsc-1-s1.binance.org:8545/"));
 
     //переменная, в которую записываем номер блока, который проверили последним. В начале инициализируем значением последнего блока с bscscan
-    static BigInteger latestKnownBlockNumber = new BigInteger(String.valueOf(28067028)); //27120252
+    static BigInteger latestKnownBlockNumber = new BigInteger(String.valueOf(28096709)); //27120252
 
     //Список, в который сохраняем транзакции, в которых есть прослушиваемый кошелёк
     public static List<EthBlock.TransactionObject> txBingo = new ArrayList<>(); //список, куда сохраняются транзакции, которые нас интересуют
