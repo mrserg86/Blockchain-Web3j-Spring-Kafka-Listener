@@ -37,7 +37,7 @@ public class JavaKafkaConsumerExample {
         // Subscribe to the topic
         consumer.subscribe(Collections.singletonList(topicName));
 
-        final int giveUp = 100;   int noRecordsCount = 0;
+        final int giveUp = 1;   int noRecordsCount = 0;
 
         while (true) {
             final ConsumerRecords<Long, String> consumerRecords = consumer.poll(1000);
