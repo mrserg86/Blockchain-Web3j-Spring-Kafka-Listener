@@ -37,7 +37,27 @@ public class JavaKafkaConsumerExample {
         // Subscribe to the topic
         consumer.subscribe(Collections.singletonList(topicName));
 
-        final int giveUp = 1;   int noRecordsCount = 0;
+//        final JavaKafkaConsumerExample movingAvg = new JavaKafkaConsumerExample();
+//
+//
+//        final Thread mainThread = Thread.currentThread();
+//
+//        // Registering a shutdown hook so we can exit cleanly
+//        Runtime.getRuntime().addShutdownHook(new Thread() {
+//            public void run() {
+//                System.out.println("Starting exit...");
+//                // Note that shutdownhook runs in a separate thread, so the only thing we can safely do to a consumer is wake it up
+//                consumer.wakeup();
+//                try {
+//                    mainThread.join();
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
+
+
+        final int giveUp = 100;   int noRecordsCount = 0;
 
         while (true) {
             final ConsumerRecords<Long, String> consumerRecords = consumer.poll(1000);
